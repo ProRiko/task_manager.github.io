@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Task Manager</title>
+    <link rel="stylesheet" type="text/css" href="web.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Your Task Manager</h1>
+        
+        <form id="taskForm">
+            <label for="taskName">Task Name:</label>
+            <input type="text" id="taskName" required>
+            
+            <label for="taskDescription">Task Description:</label>
+            <textarea id="taskDescription" rows="4" required></textarea>
+            
+            <label for="dueDate">Due Date:</label>
+            <input type="date" id="dueDate" required>
+            
+            <button type="button" onclick="addTask()">Add Task</button>
+        </form>
+
+        <ul id="taskList"></ul>
+
+        <div class="rocket" onclick="launchRocket()">🚀</div>
+    </div>
+
+    <script>
+        function addTask() {
+            var name = document.getElementById("taskName").value;
+            var description = document.getElementById("taskDescription").value;
+            var dueDate = document.getElementById("dueDate").value;
+
+            var taskElement = document.createElement("li");
+            taskElement.innerHTML = `
+                <span>${name} - ${description} (Due: ${dueDate})</span>
+                <div class="checkbox-container">
+                    <input type="checkbox" class="checkbox-input">
+                    <label class="checkbox-label">Done</label>
+                </div>
+            `;
+
+            document.getElementById("taskList").appendChild(taskElement);
+
+            document.getElementById("taskName").value = "";
+            document.getElementById("taskDescription").value = "";
+            document.getElementById("dueDate").value = "";
+
+            // Trigger the rocket launch animation when a task is added
+            launchRocket();
+        }
+
+        function launchRocket() {
+            // Reset the rocket's position
+            document.querySelector(".rocket").style.animation = "none";
+            void document.querySelector(".rocket").offsetWidth; // Trigger reflow
+            document.querySelector(".rocket").style.animation = null;
+        }
+    </script>
+</body>
+</html>
